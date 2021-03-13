@@ -11,8 +11,6 @@ def playlist_videoId(url) -> list:
         Index 0 -> Nome da Playlist
         Index1 -> Dict contendo os videoIds como chaves e os seus respectivos nomes como valores
     """
-    # url = 'https://www.youtube.com/playlist?list=PLmmmcaGqkcRA5UVtjEA2vl41yuZFWZ1Jo'
-    # url = "https://www.youtube.com/playlist?list=PLjzeyhEA84sQKuXp-rpM1dFuL2aQM_a3S"
     if not 'playlist' in url.lower():
         print("Link não é um link de playlist. Verifique.")
         return None
