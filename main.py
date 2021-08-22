@@ -6,6 +6,10 @@ from os import path, mkdir, chdir
 ## Trata link de playlist
 if 'playlist' in link:
     info = playlist_videoId(link)
+
+    if "None" in str(type(info)):
+        exit(0)
+
     playlistName = info[0].strip().replace(' ', '_')
     info_videos = info[1]
 
@@ -27,14 +31,16 @@ if 'playlist' in link:
         chdir(dir_path)
 
 
+    print("Realizando download dos vídeos")
     for videoId, videoName in info_videos.items():
         url_video = 'https://www.youtube.com/watch?v=' + videoId
         video = YouTube(url_video) 
         stream = video.streams.get_highest_resolution()
 
-        print("Realizando download de video")
+        
+        print(f"{videoName}", end="")
         stream.download()
-        print(f"{videoName} =====> CONCLUÍDO\n")
+        print(" =====> CONCLUÍDO")
 else:
     if not path.exists('Downloads_YouTube'):
         mkdir('Downloads_YouTube')
@@ -45,6 +51,7 @@ else:
     video = YouTube(link)
     stream = video.streams.get_highest_resolution()
     print("Realizando download de video")
+    print(f"{video.title}", end="")
     stream.download()
-    print(f"{video.title} =====> CONCLUÍDO\n")
+    print(" =====> CONCLUÍDO\n")
    
