@@ -1,11 +1,13 @@
 from pytube import YouTube
 from br_extrator import *
-from os import path, mkdir, chdir, getcwd
+from os import path, mkdir, chdir, getcwd, system
 from datetime import datetime as dt
 from sys import path as sysPath
 from pathlib import Path
 from conversor import extrair_audio
 
+system("@echo off")
+system("cls")
 link = input("Entre com a URL do vídeo: ")
 converter = input("Deseja converter em MP3? [S/N]: ") or "n"
 

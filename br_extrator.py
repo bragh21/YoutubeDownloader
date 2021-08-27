@@ -34,7 +34,7 @@ def playlist_videoId(url) -> list:
   # como o seu id, que será utilizado para identifica-lo
   temp = JSloads(script)
   # with open('script.js', 'w') as fl:
-  #     fl.write(JSdumps(temp))
+  #   fl.write(JSdumps(temp))
 
   # Se a playlist não for pública, o pytube não a encontrará.
   if "alerts" in temp.keys():
@@ -43,8 +43,12 @@ def playlist_videoId(url) -> list:
     if "alertRenderer" in erro.keys():
       erro1 = erro.get("alertRenderer").get("text").get("runs")[0].get("text")
       print("Não foi possivel encontrar a playlist informada.")
+      print(f"Detalhes: {erro1}")
       print("Certifique-se de que a playlist é pública, e tente novamente.")
       return None
+
+    elif "alertWithButtonRenderer" in erro.keys():
+      print("Alguns vídeos não estão disponiveis. Verifique")
 
     else:
       print("Erros desconhecidos identificados. Verifique em 'script.js'")
@@ -60,7 +64,7 @@ def playlist_videoId(url) -> list:
   obj_videos = temp4.get("contents")
 
   # Armazena o videoId e o Nome do video para realizar o download.
-  for video_prop in obj_videos:
+  for video_prop in obj_videos: #video_prop será um dict
     # info_videos = video_prop
     videoId = video_prop.get("playlistVideoRenderer").get("videoId")
     videoName = video_prop.get("playlistVideoRenderer").get("title").get("runs")[0].get("text")
