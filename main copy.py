@@ -6,6 +6,19 @@ from sys import path as sysPath
 from pathlib import Path
 from conversor import extrair_audio
 
+def callback_progress(x,y,z):
+  print("Printando progresso")
+  print(f"Z: {z}")
+  # print(x,y,z)
+  # print()
+  # print(f"X: {dir(x)}")
+  # print()
+  # print(f"Y: {dir(y)}")
+  # print()
+  # print(f"Z: {dir(z)}")
+  
+
+
 system("@echo off")
 system("cls")
 link = input("Entre com a URL do vídeo: ")
@@ -54,22 +67,22 @@ if 'playlist' in link:
     mkdir(dir_path)
     chdir(dir_path)
 
-  system("cls")
+
   print("Realizando download dos vídeos")
   for videoId, videoName in info_videos.items():
     url_video = 'https://www.youtube.com/watch?v=' + videoId
-    video = YouTube(url_video) 
+    video = YouTube(url_video, on_progress_callback=callback_progress) 
     stream = video.streams.get_highest_resolution()
 
-    print(f"{videoName}", end="", flush=True)
+    print(f"{videoName}", end="")
     stream.download()
     print(" =====> CONCLUÍDO")
 
     if 's' in converter.lower():
-      print(f"Convertendo {videoName}", end="", flush=True)
+      print(f"Convertendo {videoName}", end="")
       extrair_audio(str(Path(getcwd(), stream.default_filename.replace("'", ""))), manter)
       print(" =====> CONCLUÍDO")
-    print()
+
 
 else:
   if not path.exists('Downloads_YouTube'):
@@ -78,21 +91,14 @@ else:
   else:
     chdir('Downloads_YouTube')
 
-  video = YouTube(link)
+  video = YouTube(link, on_progress_callback=callback_progress)
   stream = video.streams.get_highest_resolution()
-  system("cls")
   print("Realizando download de video")
-  print(f"{video.title}", end="", flush=True)
+  print(f"{video.title}", end="")
   stream.download()
   print(" =====> CONCLUÍDO")
   
   if 's' in converter.lower():
-    print(f"Convertendo {video.title}", end="", flush=True)
+    print(f"Convertendo {video.title}", end="")
     extrair_audio(str(Path(getcwd(), stream.default_filename.replace("'", ""))), manter)
     print(" =====> CONCLUÍDO")
-  
-  print()
-
-print("Download finalizado.")
-print("Obrigado por usar o Youtube Downloader!")
-system(f"explorer /select, {Path(getcwd())}")

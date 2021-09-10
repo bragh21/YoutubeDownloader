@@ -56,7 +56,7 @@ def playlist_videoId(url) -> list:
         fl.write(JSdumps(temp))
       return None
 
-  playlist_title = temp.get("metadata").get("playlistMetadataRenderer").get("title").replace('"','')
+  playlist_title = temp.get("metadata").get("playlistMetadataRenderer").get("title").replace('"','').replace(r"/","_")
   temp1 = temp.get('contents').get("twoColumnBrowseResultsRenderer")
   temp2 = temp1.get('tabs')[0].get("tabRenderer")
   temp3 = temp2.get("content").get("sectionListRenderer").get("contents")[0]
