@@ -1,4 +1,9 @@
 @echo off
 color 30
-D:\Repositorios_Separados_GITHUB\YoutubeDownloader\.venv\Scripts\python.exe D:\Repositorios_Separados_GITHUB\YoutubeDownloader\main.py
+
+set baseDir=%~dp0
+set envPython="%baseDir:"=%.venv\Scripts\python.exe"
+set script="%baseDir:"=%main.py"
+
+%envPython% %script%
 pause
