@@ -1,0 +1,4 @@
+- oppção para indexar as musicas e perguntar se deseja começar a partir de um numero (para playlists que serao adicionadas a outras)
+- pedir local de download
+- armazenar ultimo local de download, para carregar o caminho mais rápido na proxima vez que o usuario fizer um download
+- implementar contagem de músicas
