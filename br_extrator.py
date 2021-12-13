@@ -35,7 +35,9 @@ def playlist_videoId(url) -> list:
   temp = JSloads(script)
   # with open('script.js', 'w') as fl:
   #   fl.write(JSdumps(temp))
+  # quit()
 
+  #########################################################################
   # Se a playlist não for pública, o pytube não a encontrará.
   if "alerts" in temp.keys():
     erro = temp.get("alerts")[0]
@@ -55,7 +57,10 @@ def playlist_videoId(url) -> list:
       with open('script.js', 'w') as fl:
         fl.write(JSdumps(temp))
       return None
-
+  
+  # Os vídeos da playlist estão neste caminho:
+  # contents/twoColumnBrowseResultsRenderer/tabs/tabRenderer/content/sectionListRenderer/contents ...
+  #   itemSectionRenderer/contents/playlistVideoListRenderer/contents
   playlist_title = temp.get("metadata").get("playlistMetadataRenderer").get("title").replace('"','').replace(r"/","_")
   temp1 = temp.get('contents').get("twoColumnBrowseResultsRenderer")
   temp2 = temp1.get('tabs')[0].get("tabRenderer")
@@ -63,6 +68,14 @@ def playlist_videoId(url) -> list:
   temp4 = temp3.get("itemSectionRenderer").get("contents")[0].get("playlistVideoListRenderer")
   obj_videos = temp4.get("contents")
 
+  ## Para testar o processamento de playlists com mais de 100 videos
+  if len(obj_videos) > 100:
+    ctoken = obj_videos[len(obj_videos)-1].get("continuationItemRenderer").get("continuationEndpoint").get("continuationCommand").get("token")
+    with open('ctoken.txt', 'w') as fl:
+      fl.write(ctoken)
+      
+  print(f"Playlist {playlist_title} possui {len(obj_videos)} vídeos")
+  quit()
   # Armazena o videoId e o Nome do video para realizar o download.
   for video_prop in obj_videos: #video_prop será um dict
     # info_videos = video_prop
