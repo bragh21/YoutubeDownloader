@@ -74,8 +74,6 @@ def playlist_videoId(url) -> list:
     with open('ctoken.txt', 'w') as fl:
       fl.write(ctoken)
       
-  print(f"Playlist {playlist_title} possui {len(obj_videos)} vídeos")
-  quit()
   # Armazena o videoId e o Nome do video para realizar o download.
   for video_prop in obj_videos: #video_prop será um dict
     # info_videos = video_prop
