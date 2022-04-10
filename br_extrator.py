@@ -61,7 +61,16 @@ def playlist_videoId(url) -> list:
   # Os vídeos da playlist estão neste caminho:
   # contents/twoColumnBrowseResultsRenderer/tabs/tabRenderer/content/sectionListRenderer/contents ...
   #   itemSectionRenderer/contents/playlistVideoListRenderer/contents
-  playlist_title = temp.get("metadata").get("playlistMetadataRenderer").get("title").replace('"','').replace(r"/","_")
+  playlist_title = str(temp.get("metadata").get("playlistMetadataRenderer").get("title")).strip()
+  
+  # O nome da playlist será o nome da pasta que será criada no SO. Trata a string.
+  playlist_title = playlist_title.replace("\\","_").replace("/","_")
+  playlist_title = playlist_title.replace(":","_").replace("?","_")
+  playlist_title = playlist_title.replace('"','').replace("'","")
+  playlist_title = playlist_title.replace("<","_").replace('>','_')
+  playlist_title = playlist_title.replace("|","_")
+  playlist_title = playlist_title[:100]
+  
   temp1 = temp.get('contents').get("twoColumnBrowseResultsRenderer")
   temp2 = temp1.get('tabs')[0].get("tabRenderer")
   temp3 = temp2.get("content").get("sectionListRenderer").get("contents")[0]
@@ -78,7 +87,16 @@ def playlist_videoId(url) -> list:
   for video_prop in obj_videos: #video_prop será um dict
     # info_videos = video_prop
     videoId = video_prop.get("playlistVideoRenderer").get("videoId")
-    videoName = video_prop.get("playlistVideoRenderer").get("title").get("runs")[0].get("text")
+    videoName = str(video_prop.get("playlistVideoRenderer").get("title").get("runs")[0].get("text")).strip()
+    
+    # O nome do vídeo será usado para gravar o arquivo no SO. Trata a string
+    videoName = videoName.replace("\\","_").replace("/","_")
+    videoName = videoName.replace(":","_").replace("?","_")
+    videoName = videoName.replace('"','').replace("'","")
+    videoName = videoName.replace("<","_").replace('>','_')
+    videoName = videoName.replace("|","_")
+    videoName = videoName[:100]
+    
     info_videos[videoId] = videoName
 
   return [playlist_title, info_videos]
